@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>จำลองเดารหัส Wi-Fi</title>
+</head>
+<body>
+    <h1>จำลองเดารหัส Wi-Fi</h1>
+    <p>ระบบจะเดารหัส 8 หลักจนเจอรหัสที่ตั้งไว้</p>
+    <button onclick="startBruteForce()">เริ่มเดารหัส</button>
+    <p id="status"></p>
+
+    <script>
+        const correctPassword = "24532198";
+        let attempt = 0;
+        const maxAttempts = 100000000;
+        const status = document.getElementById("status");
+
+        function startBruteForce() {
+            status.textContent = "เริ่มเดารหัส...";
+            attempt = 0;
+
+            function tryNext() {
+                if (attempt >= maxAttempts) {
+                    status.textContent = "ไม่พบรหัส";
+                    return;
+                }
+                let guess = attempt.toString().padStart(8, '0');
+                status.textContent = "ลองรหัส: " + guess;
+                if (guess === correctPassword) {
+                    status.textContent = "✅ เจอรหัสแล้ว: " + guess;
+                } else {
+                    attempt++;
+                    setTimeout(tryNext, 1);
+                }
+            }
+
+            tryNext();
+        }
+    </script>
+</body>
+</html>
